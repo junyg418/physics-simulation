@@ -7,7 +7,8 @@ while True:
     moveType = input('''
     완전탄성충돌 : 1
     포물선 통통 : 2
-    종료 : 아무 키나 입력''')
+    종료 : 아무 키나 입력
+    >>>''')
 
     if moveType == '1':
         move = 0 # 'wantanchung'
@@ -17,6 +18,7 @@ while True:
         break
     else:
         sys.exit()
+
 
 pygame.init()
 
@@ -35,6 +37,7 @@ GameDisplay.fill(WHITE)
 pygame.display.set_caption("Gravity Falls")
 
 Circle = circle.Circle(GameDisplay)
+
 
 
 while True:

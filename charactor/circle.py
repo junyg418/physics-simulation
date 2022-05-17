@@ -7,7 +7,7 @@ class Circle:
         self.p_x = 200.0
         self.p_y = 30.0
         self.v = 0.0
-        self.ang_v = 1.0
+        self.ang_v = 10.0
         self.acceleration = 0.1
         self.type = "down"
         self.angType = 'right'
@@ -35,8 +35,11 @@ class Circle:
                 self.angType = 'left'
         else:
             self.p_x -= self.ang_v
-            if self.p_x <= 0:
+            if self.p_x <= 30:
                 self.angType = 'right'
+                
+
+
     def draw(self):
         self.display.fill((255, 255, 255))
         pygame.draw.circle(self.display, (0, 0, 255), (self.p_x, self.p_y), 30)

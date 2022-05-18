@@ -30,14 +30,18 @@ RED = (255, 0, 0)
 GREEN = (0, 255, 0)
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
-
-GameDisplay = pygame.display.set_mode((640, 440))
+# display_x = 640
+# display_y = 440
+display_x = 1400
+display_y = 800
+GameDisplay = pygame.display.set_mode((display_x, display_y))
 GameDisplay.fill(WHITE)
 # pygame.draw.circle(GameDisplay, BLACK, (100, 50), 30)
 pygame.display.set_caption("Gravity Falls")
 
+circle.dis_x = display_x
+circle.dis_y = display_y
 Circle = circle.Circle(GameDisplay)
-
 
 
 while True:
@@ -51,7 +55,7 @@ while True:
                 pygame.quit()
                 sys.exit()
         elif event.type == MOUSEBUTTONDOWN:
-            pygame.draw.circle(GameDisplay, BLACK, event.pos, 30)
+            pygame.draw.circle(GameDisplay, BLACK, event.pos, 10)
     FramePerSec.tick(FPS)
     Circle.accel()
     if move:

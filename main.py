@@ -79,9 +79,6 @@ while space_bool:
     pygame.display.update()
     # if abs(spacePlayer.v_x)
 
-    font = pygame.font.SysFont("arial", 20)
-    text = font.render(f'x축 속도: {abs(spacePlayer.v_x)} y축 속도: {abs(spacePlayer.v_y)}', True, BLACK)
-    GameDisplay.blit(text, (0,0))
     for event in pygame.event.get():
         if event.type == QUIT:
             pygame.quit()
@@ -110,3 +107,6 @@ while space_bool:
     spacePlayer.x_posMove()
     spacePlayer.y_posMove()
     spacePlayer.draw()
+    font = pygame.font.SysFont("arial", 20)
+    text = font.render(f'x축 속도: {abs(spacePlayer.v_x)} y축 속도: {abs(spacePlayer.v_y)}', True, BLACK)
+    GameDisplay.blit(text, (0,0))

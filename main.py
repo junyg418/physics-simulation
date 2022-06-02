@@ -1,4 +1,5 @@
 import sys
+from time import sleep
 import pygame
 from pygame.locals import *
 from charactor import circle
@@ -7,23 +8,29 @@ from charactor import spaceCircle
 tan_bool = False
 space_bool = False
 while True:
-    moveType = input('''
+    moveType = int(input('''
 완전탄성충돌 : 1
 포물선 통통 : 2
 무중력 시뮬 : 3
+무중력 시뮬 게임 : 4
 종료 : 아무 키나 입력
->>>''')
+>>>'''))
 
-    if moveType == '1':
-        move = 0 # 'wantanchung'
+    if moveType == 1:
+        move = False # 'wantanchung'
         tan_bool = True
         break
-    elif moveType == '2':
-        move = 1 # 'pomul'
+    elif moveType == 2:
+        move = True # 'pomul'
         tan_bool = True
         break
-    elif moveType == '3':
+    elif moveType == 3:
         space_bool = True
+        game_play = False
+        break
+    elif moveType == 4:
+        space_bool = True
+        game_play = True
         break
     else:
         sys.exit()
@@ -77,7 +84,6 @@ if space_bool:
 
 while space_bool:
     pygame.display.update()
-    # if abs(spacePlayer.v_x)
 
     for event in pygame.event.get():
         if event.type == QUIT:
@@ -106,7 +112,34 @@ while space_bool:
     FramePerSec.tick(FPS)
     spacePlayer.x_posMove()
     spacePlayer.y_posMove()
+    spacePlayer.max_cheacker()
     spacePlayer.draw()
-    font = pygame.font.SysFont("arial", 20)
-    text = font.render(f'x축 속도: {abs(spacePlayer.v_x)} y축 속도: {abs(spacePlayer.v_y)}', True, BLACK)
-    GameDisplay.blit(text, (0,0))
+    if game_play:
+        font = pygame.font.SysFont("applegothicttf", 20)
+        text = font.render(f'x축 속도: {abs(spacePlayer.v_x)} y축 속도: {abs(spacePlayer.v_y)} out: {spacePlayer.out_count} life: {spacePlayer.life_count}', True, BLACK)
+        GameDisplay.blit(text, (0,0))
+        spacePlayer.max_cheacker()
+        if spacePlayer.out_count == 2:
+            if spacePlayer.life_count != 1:
+                spacePlayer.out_count = 0
+                spacePlayer.life_count -= 1
+                font_1 = pygame.font.SysFont("applegothicttf", 100)
+                text_out = font_1.render(f'{spacePlayer.life_count}번 남았습니다.', True, BLACK)
+                GameDisplay.blit(text_out, (100,100))
+                
+
+                # sleep(2)
+            elif spacePlayer.life_count == 1:
+                font = pygame.font.SysFont("applegothicttf", 100)
+                best_score = 0  #추가 예정
+                text = font.render(f'Game Over\n최고기록: {best_score}\n점수: {spacePlayer.game_score}\nEnter를 누르면 다시 시작합니다.', True, BLACK)  # 최고기록 예정
+                # while True:
+                # for event in pygame.event.get():
+                #     if event.type == KEYDOWN:
+                #         if event.key == K_ESCAPE:
+                #             pygame.quit()
+                #             sys.exit()
+                #         elif event.key == K_SPACE:
+                #             spacePlayer = spaceCircle.SpaceCircle(GameDisplay)
+                #             break
+                        # sleep(0.1)

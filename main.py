@@ -47,12 +47,15 @@ GREEN = (0, 255, 0)
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
 
-size = (640, 440)
+size = (600, 400)
 display_x, display_y = size 
 GameDisplay = pygame.display.set_mode((display_x, display_y))
 GameDisplay.fill(WHITE)
 pygame.display.set_caption("Gravity Falls")
 
+big_font = pygame.font.SysFont("applegothicttf", 60)
+middle_font = pygame.font.SysFont("applegothicttf", 40)
+little_font = pygame.font.SysFont("applegothicttf", 20)
 
 if tan_bool:
     circle.dis_x = display_x
@@ -82,64 +85,75 @@ if space_bool:
     spaceCircle.dis_y = display_y
     spacePlayer = spaceCircle.SpaceCircle(GameDisplay)
 
-while space_bool:
-    pygame.display.update()
+def game_runing():
+    while game_run_bool:
+        pygame.display.update()
 
-    for event in pygame.event.get():
-        if event.type == QUIT:
-            pygame.quit()
-            sys.exit()
-        if event.type == KEYDOWN:
-            if event.key == K_ESCAPE:
+        for event in pygame.event.get():
+            if event.type == QUIT:
                 pygame.quit()
                 sys.exit()
-            elif event.key == K_LEFT:
-                # spacePlayer.v_x -= 0.1
-                spacePlayer.v_x = round(spacePlayer.v_x - 0.1, 1)
-                print(f'x{spacePlayer.v_x}')
-            elif event.key == K_RIGHT:
-                # spacePlayer.v_x += 0.1
-                spacePlayer.v_x = round(spacePlayer.v_x + 0.1, 1)
-                print(f'x{spacePlayer.v_x}')
-            elif event.key == K_UP:
-                # spacePlayer.v_y += 0.1
-                spacePlayer.v_y = round(spacePlayer.v_y - 0.1, 1)
-                print(f'y{spacePlayer.v_y}')
-            elif event.key == K_DOWN:
-                spacePlayer.v_y = round(spacePlayer.v_y + 0.1, 1)
-                print(f'y{spacePlayer.v_y}')
-        
-    FramePerSec.tick(FPS)
-    spacePlayer.x_posMove()
-    spacePlayer.y_posMove()
-    spacePlayer.max_cheacker()
-    spacePlayer.draw()
-    if game_play:
-        font = pygame.font.SysFont("applegothicttf", 20)
-        text = font.render(f'x축 속도: {abs(spacePlayer.v_x)} y축 속도: {abs(spacePlayer.v_y)} out: {spacePlayer.out_count} life: {spacePlayer.life_count}', True, BLACK)
-        GameDisplay.blit(text, (0,0))
+            if event.type == KEYDOWN:
+                if event.key == K_ESCAPE:
+                    pygame.quit()
+                    sys.exit()
+                elif event.key == K_LEFT:
+                    # spacePlayer.v_x -= 0.1
+                    spacePlayer.v_x = round(spacePlayer.v_x - 0.1, 1)
+                    print(f'x{spacePlayer.v_x}')
+                elif event.key == K_RIGHT:
+                    # spacePlayer.v_x += 0.1
+                    spacePlayer.v_x = round(spacePlayer.v_x + 0.1, 1)
+                    print(f'x{spacePlayer.v_x}')
+                elif event.key == K_UP:
+                    # spacePlayer.v_y += 0.1
+                    spacePlayer.v_y = round(spacePlayer.v_y - 0.1, 1)
+                    print(f'y{spacePlayer.v_y}')
+                elif event.key == K_DOWN:
+                    spacePlayer.v_y = round(spacePlayer.v_y + 0.1, 1)
+                    print(f'y{spacePlayer.v_y}')
+            
+        FramePerSec.tick(FPS)
+        spacePlayer.x_posMove()
+        spacePlayer.y_posMove()
         spacePlayer.max_cheacker()
-        if spacePlayer.out_count == 2:
-            if spacePlayer.life_count != 1:
-                spacePlayer.out_count = 0
-                spacePlayer.life_count -= 1
-                font_1 = pygame.font.SysFont("applegothicttf", 100)
-                text_out = font_1.render(f'{spacePlayer.life_count}번 남았습니다.', True, BLACK)
-                GameDisplay.blit(text_out, (100,100))
-                
+        spacePlayer.draw()
+        if game_play:
+            text = little_font.render(f'x축 속도: {abs(spacePlayer.v_x)} y축 속도: {abs(spacePlayer.v_y)} out: {spacePlayer.out_count} life: {spacePlayer.life_count}', True, BLACK)
+            GameDisplay.blit(text, (0,0))
+            spacePlayer.max_cheacker()
+            if spacePlayer.out_count == 2:
+                if spacePlayer.life_count != 1:
+                    spacePlayer.life_count -= 1
+                    font_1 = pygame.font.SysFont("applegothicttf", 100)
+                    text_out = font_1.render(f'{spacePlayer.life_count}번 남았습니다.', True, BLACK)
+                    GameDisplay.blit(text_out, (100,100))
+                    sleep(0.1)
+                    spacePlayer.out_count = 0
 
-                # sleep(2)
-            elif spacePlayer.life_count == 1:
-                font = pygame.font.SysFont("applegothicttf", 100)
-                best_score = 0  #추가 예정
-                text = font.render(f'Game Over\n최고기록: {best_score}\n점수: {spacePlayer.game_score}\nEnter를 누르면 다시 시작합니다.', True, BLACK)  # 최고기록 예정
-                # while True:
-                # for event in pygame.event.get():
-                #     if event.type == KEYDOWN:
-                #         if event.key == K_ESCAPE:
-                #             pygame.quit()
-                #             sys.exit()
-                #         elif event.key == K_SPACE:
-                #             spacePlayer = spaceCircle.SpaceCircle(GameDisplay)
-                #             break
-                        # sleep(0.1)
+                    # sleep(2)
+                elif spacePlayer.life_count == 1:
+                    best_score = 0  #추가 예정
+                    game_over_txt = big_font.render('Game Over', True, BLACK)  # 최고기록 예정
+                    best_score_txt = middle_font.render(f'bestscore: {best_score}', True, BLACK)
+                    my_score_txt = middle_font.render(f'socre: {spacePlayer.game_score}',True,BLACK)
+                    play_again_txt = middle_font.render('Enter를 누르면 다시 시작합니다.',True,BLACK)
+                    GameDisplay.blit(game_over_txt, (160,100))
+                    GameDisplay.blit(best_score_txt, (160,170))
+                    GameDisplay.blit(my_score_txt, (160,210))
+                    GameDisplay.blit(play_again_txt, (160,250))
+                    # while True:
+                    # for event in pygame.event.get():
+                    #     if event.type == KEYDOWN:
+                    #         if event.key == K_ESCAPE:
+                    #             pygame.quit()
+                    #             sys.exit()
+                    #         elif event.key == K_SPACE:
+                    #             spacePlayer = spaceCircle.SpaceCircle(GameDisplay)
+                    #             break
+                            # sleep(0.1)
+
+
+game_run_bool = True
+if space_bool:
+    game_runing()

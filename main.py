@@ -86,6 +86,7 @@ if space_bool:
     spacePlayer = spaceCircle.SpaceCircle(GameDisplay)
 
 def game_runing():
+    global spacePlayer
     while game_run_bool:
         pygame.display.update()
 
@@ -132,28 +133,42 @@ def game_runing():
                     spacePlayer.out_count = 0
 
                     # sleep(2)
-                elif spacePlayer.life_count == 1:
-                    best_score = 0  #추가 예정
-                    game_over_txt = big_font.render('Game Over', True, BLACK)  # 최고기록 예정
-                    best_score_txt = middle_font.render(f'bestscore: {best_score}', True, BLACK)
-                    my_score_txt = middle_font.render(f'socre: {spacePlayer.game_score}',True,BLACK)
-                    play_again_txt = middle_font.render('Enter를 누르면 다시 시작합니다.',True,BLACK)
-                    GameDisplay.blit(game_over_txt, (160,100))
-                    GameDisplay.blit(best_score_txt, (160,170))
-                    GameDisplay.blit(my_score_txt, (160,210))
-                    GameDisplay.blit(play_again_txt, (160,250))
+                elif spacePlayer.life_count == 1:  
+                    return 0
                     # while True:
-                    # for event in pygame.event.get():
-                    #     if event.type == KEYDOWN:
-                    #         if event.key == K_ESCAPE:
-                    #             pygame.quit()
-                    #             sys.exit()
-                    #         elif event.key == K_SPACE:
-                    #             spacePlayer = spaceCircle.SpaceCircle(GameDisplay)
-                    #             break
                             # sleep(0.1)
+
+def game_over():
+    global spacePlayer
+    while True:
+        pygame.display.update()
+
+        for event in pygame.event.get():
+            if event.type == QUIT:
+                pygame.quit()
+                sys.exit()
+            if event.type == KEYDOWN:
+                if event.key == K_ESCAPE:
+                    pygame.quit()
+                    sys.exit()
+                elif event.key == K_SPACE:
+                    spacePlayer = spaceCircle.SpaceCircle(GameDisplay)
+                    return 1
+        GameDisplay.fill(WHITE)
+        best_score = 0  #추가 예정
+        game_over_txt = big_font.render('Game Over', True, BLACK)  # 최고기록 예정
+        best_score_txt = middle_font.render(f'bestscore: {best_score}', True, BLACK)
+        my_score_txt = middle_font.render(f'socre: {spacePlayer.game_score}',True,BLACK)
+        play_again_txt = middle_font.render('Enter를 누르면 다시 시작합니다.',True,BLACK)
+        GameDisplay.blit(game_over_txt, (160,100))
+        GameDisplay.blit(best_score_txt, (160,170))
+        GameDisplay.blit(my_score_txt, (160,210))
+        GameDisplay.blit(play_again_txt, (160,250))
 
 
 game_run_bool = True
 if space_bool:
     game_runing()
+    while True:
+        if game_over():
+            game_runing()

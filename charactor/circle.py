@@ -9,7 +9,7 @@ class Circle:
         self.p_y = 100.0
         self.v = 0.0
         self.ang_v = 10.0
-        self.acceleration = 0.2
+        self.acceleration = 0.1
         self.type = "down"
         self.angType = 'right'
 

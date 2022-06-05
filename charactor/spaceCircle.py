@@ -36,17 +36,26 @@ class SpaceCircle:
         pygame.draw.circle(self.display, (0,0,0), (self.p_x, self.p_y), 20)
 
     def max_cheacker(self):
+        '''
+        게임용 함수:
+            공이 속도가 줄어들었을 때 아웃을 판단 하는 함수
+        '''
+
+        #최대값 설정
         if abs(self.v_x)  > self.max_v_x:
+            self.out_count = 0
             self.max_v_x = abs(self.v_x)
         if abs(self.v_y)  > self.max_v_y:
+            self.out_count = 0
             self.max_v_y = abs(self.v_y)
 
+        #속도가 줄어들었을 떄 아웃
         if self.max_v_x > abs(self.v_x):
             self.out_count += 1
-            self.max_v_x = self.v_x
+            self.max_v_x = abs(self.v_x)
         if self.max_v_y > abs(self.v_y):
             self.out_count += 1
-            self.max_v_y = self.v_y
+            self.max_v_y = abs(self.v_y)
 
 
     def game_life_count(self):

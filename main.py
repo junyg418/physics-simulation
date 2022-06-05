@@ -124,20 +124,33 @@ def game_runing():
             GameDisplay.blit(text, (0,0))
             spacePlayer.max_cheacker()
             if spacePlayer.out_count == 2:
-                if spacePlayer.life_count != 1:
-                    spacePlayer.life_count -= 1
-                    font_1 = pygame.font.SysFont("applegothicttf", 100)
-                    text_out = font_1.render(f'{spacePlayer.life_count}번 남았습니다.', True, BLACK)
-                    GameDisplay.blit(text_out, (100,100))
-                    sleep(0.1)
-                    spacePlayer.out_count = 0
+                if spacePlayer.life_count:
+                    return 1
+                    # life_out()
+                    # spacePlayer.life_count -= 1
+                    # font_1 = pygame.font.SysFont("applegothicttf", 100)
+                    # text_out = font_1.render(f'{spacePlayer.life_count}번 남았습니다.', True, BLACK)
+                    # GameDisplay.blit(text_out, (100,100))
+                    # sleep(0.1)
+                    # spacePlayer.out_count = 0
 
                     # sleep(2)
-                elif spacePlayer.life_count == 1:  
+                else:
                     return 0
                     # while True:
                             # sleep(0.1)
 
+def life_out():
+    while True:
+        spacePlayer.life_count -= 1
+        font_1 = pygame.font.SysFont("applegothicttf", 100)
+        text_out = font_1.render(f'{spacePlayer.life_count}번 남았습니다.', True, BLACK)
+        GameDisplay.blit(text_out, (100,100))
+        spacePlayer.out_count = 0
+        pygame.display.update()
+        sleep(1)
+        break
+    game_runing()
 def game_over():
     global spacePlayer
     while True:
@@ -168,7 +181,10 @@ def game_over():
 
 game_run_bool = True
 if space_bool:
-    game_runing()
     while True:
-        if game_over():
-            game_runing()
+        if game_runing():
+            life_out()
+        else:
+            if game_over():
+                game_runing()
+            

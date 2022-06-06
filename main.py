@@ -53,9 +53,9 @@ GameDisplay = pygame.display.set_mode((display_x, display_y))
 GameDisplay.fill(WHITE)
 pygame.display.set_caption("Gravity Falls")
 
-big_font = pygame.font.SysFont("applegothicttf", 60)
-middle_font = pygame.font.SysFont("applegothicttf", 40)
-little_font = pygame.font.SysFont("applegothicttf", 20)
+big_font = pygame.font.SysFont("malgungothicsemilight", 60)
+middle_font = pygame.font.SysFont("malgungothicsemilight", 30)
+little_font = pygame.font.SysFont("malgungothicsemilight", 16)
 
 if tan_bool:
     circle.dis_x = display_x
@@ -121,7 +121,7 @@ def game_runing():
         spacePlayer.draw()
         if game_play:
             text = little_font.render(f'x축 속도: {abs(spacePlayer.v_x)} y축 속도: {abs(spacePlayer.v_y)} out: {spacePlayer.out_count} life: {spacePlayer.life_count}', True, BLACK)
-            GameDisplay.blit(text, (0,0))
+            GameDisplay.blit(text, (10,0))
             spacePlayer.max_cheacker()
             if spacePlayer.out_count == 2:
                 if spacePlayer.life_count:
@@ -143,9 +143,9 @@ def game_runing():
 def life_out():
     while True:
         spacePlayer.life_count -= 1
-        font_1 = pygame.font.SysFont("applegothicttf", 100)
+        font_1 = pygame.font.SysFont("malgungothicsemilight", 40)
         text_out = font_1.render(f'{spacePlayer.life_count}번 남았습니다.', True, BLACK)
-        GameDisplay.blit(text_out, (100,100))
+        GameDisplay.blit(text_out, (160,110))
         spacePlayer.out_count = 0
         pygame.display.update()
         sleep(1)
@@ -173,10 +173,10 @@ def game_over():
         best_score_txt = middle_font.render(f'bestscore: {best_score}', True, BLACK)
         my_score_txt = middle_font.render(f'socre: {spacePlayer.game_score}',True,BLACK)
         play_again_txt = middle_font.render('Enter를 누르면 다시 시작합니다.',True,BLACK)
-        GameDisplay.blit(game_over_txt, (160,100))
-        GameDisplay.blit(best_score_txt, (160,170))
-        GameDisplay.blit(my_score_txt, (160,210))
-        GameDisplay.blit(play_again_txt, (160,250))
+        GameDisplay.blit(game_over_txt, (100,80))
+        GameDisplay.blit(best_score_txt, (100,160))
+        GameDisplay.blit(my_score_txt, (100,190))
+        GameDisplay.blit(play_again_txt, (80,250))
 
 
 game_run_bool = True

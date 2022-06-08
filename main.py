@@ -86,7 +86,7 @@ if space_bool:
     spacePlayer = spaceCircle.SpaceCircle(GameDisplay)
 
 def game_runing():
-    global spacePlayer
+    global spacePlayer, score_val
     while game_run_bool:
         pygame.display.update()
 
@@ -122,23 +122,15 @@ def game_runing():
         if game_play:
             text = little_font.render(f'x축 속도: {abs(spacePlayer.v_x)} y축 속도: {abs(spacePlayer.v_y)} out: {spacePlayer.out_count} life: {spacePlayer.life_count}', True, BLACK)
             GameDisplay.blit(text, (10,0))
+            score_val = int((abs(spacePlayer.v_x) + abs(spacePlayer.v_y))*100+0.5)
+            score_txt = little_font.render(f'score : {score_val}', True, BLACK)
+            GameDisplay.blit(score_txt, (10,30))
             spacePlayer.max_cheacker()
             if spacePlayer.out_count == 2:
                 if spacePlayer.life_count:
                     return 1
-                    # life_out()
-                    # spacePlayer.life_count -= 1
-                    # font_1 = pygame.font.SysFont("applegothicttf", 100)
-                    # text_out = font_1.render(f'{spacePlayer.life_count}번 남았습니다.', True, BLACK)
-                    # GameDisplay.blit(text_out, (100,100))
-                    # sleep(0.1)
-                    # spacePlayer.out_count = 0
-
-                    # sleep(2)
                 else:
                     return 0
-                    # while True:
-                            # sleep(0.1)
 
 def life_out():
     while True:
@@ -171,7 +163,7 @@ def game_over():
         best_score = 0  #추가 예정
         game_over_txt = big_font.render('Game Over', True, BLACK)  # 최고기록 예정
         best_score_txt = middle_font.render(f'bestscore: {best_score}', True, BLACK)
-        my_score_txt = middle_font.render(f'socre: {spacePlayer.game_score}',True,BLACK)
+        my_score_txt = middle_font.render(f'socre: {score_val}',True,BLACK)
         play_again_txt = middle_font.render('Enter를 누르면 다시 시작합니다.',True,BLACK)
         GameDisplay.blit(game_over_txt, (100,80))
         GameDisplay.blit(best_score_txt, (100,160))

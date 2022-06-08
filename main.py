@@ -144,7 +144,10 @@ def life_out():
         break
     game_runing()
 def game_over():
-    global spacePlayer
+    global spacePlayer, best_score
+    if score_val > (best_score:=int(open('bestscore.txt','r').readline())):
+        with open('bestscore.txt', 'w') as f:
+            f.write(str(best_score))
     while True:
         pygame.display.update()
 

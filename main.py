@@ -144,10 +144,16 @@ def life_out():
         break
     game_runing()
 def game_over():
-    global spacePlayer, best_score
-    if score_val > (best_score:=int(open('bestscore.txt','r').readline())):
-        with open('bestscore.txt', 'w') as f:
-            f.write(str(best_score))
+    global spacePlayer
+    try:
+        best_file = open('bestscore.txt','r')
+        best_score = int(best_file.readline())
+    finally:
+        best_file.close()
+    if score_val > best_score: # 내 점수가 최고기록 일 떄 
+        best_score = score_val
+        with open('bestscore.txt', 'w') as f: 
+            f.write(str(best_score)) # 최고기록 작성
     while True:
         pygame.display.update()
 
@@ -163,7 +169,6 @@ def game_over():
                     spacePlayer = spaceCircle.SpaceCircle(GameDisplay)
                     return 1
         GameDisplay.fill(WHITE)
-        best_score = 0  #추가 예정
         game_over_txt = big_font.render('Game Over', True, BLACK)  # 최고기록 예정
         best_score_txt = middle_font.render(f'bestscore: {best_score}', True, BLACK)
         my_score_txt = middle_font.render(f'socre: {score_val}',True,BLACK)

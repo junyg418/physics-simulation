@@ -49,7 +49,7 @@ WHITE = (255, 255, 255)
 
 size = (600, 400)
 display_x, display_y = size 
-GameDisplay = pygame.display.set_mode((display_x, display_y))
+GameDisplay = pygame.display.set_mode(size)
 GameDisplay.fill(WHITE)
 pygame.display.set_caption("Gravity Falls")
 
